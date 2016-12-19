@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{config.appNameLong}}</ion-title>
+     <ion-buttons end>
+      <button ion-button icon-only (click)="showIonicInfo()">
+        <ion-icon name="ionic"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <p>Ipsum dolor amet tongue short ribs strip steak cupim, ground round turducken corned beef kevin sausage pork belly turkey
+    pork chop burgdoggen. Brisket bresaola rump prosciutto, pig corned beef spare ribs chuck shoulder t-bone tongue swine.
+    Cow beef ribs andouille, sirloin landjaeger swine prosciutto.</p>
+    <p>Pork chop biltong chuck cow andouille porchetta jerky cupim short loin pork loin. Ham venison sirloin bacon shoulder, picanha
+    jowl landjaeger turkey short ribs tail drumstick sausage swine pork loin. Ham frankfurter bacon, tenderloin andouille
+    rump jowl sausage salami strip steak capicola.</p>
+  <button ion-button (click)="doLogin()" block>Login</button>
+  <p>Shankle doner tongue salami, jerky pork kevin cow spare ribs biltong t-bone corned beef chuck shoulder chicken. Capicola
+    andouille tri-tip sausage leberkas chicken. Pig biltong drumstick brisket, venison jowl meatball beef ground round. Picanha
+    venison ground round, tenderloin meatloaf shank swine tri-tip. Ball tip shoulder kielbasa pork loin, tenderloin t-bone
+    pastrami chuck pork chop bresaola.</p>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    ({{clientData.storageType}})    
+  </ion-toolbar>
+</ion-footer>

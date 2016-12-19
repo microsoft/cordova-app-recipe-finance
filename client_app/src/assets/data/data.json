@@ -1,0 +1,103 @@
+{
+  "clients": [
+    {
+      "id": 1,
+      "name": "John Wargo",
+      "email": "john@somecompany.com",
+      "address": "42 Market Street",
+      "city": "Akron",
+      "state": "Ohio",
+      "zip": "44313",
+      "phone1": "330.836.2112",
+      "phone2": "330.697.4404"
+    },
+    {
+      "id": 2,
+      "name": "Jordan Matthiesen",
+      "email": "jordan@anothercompany.com",
+      "address": "1 Microsoft Way",
+      "city": "Redmond",
+      "state": "WA",
+      "zip": "98052",
+      "phone1": "732.476.5600",
+      "phone2": ""
+    },
+ {
+      "id": 3,
+      "name": "Linda Zhong",
+      "email": "lzhong@yetanothercompany.com",
+      "address": "23 Brandeau Lane",
+      "city": "Fairlawn",
+      "state": "Ohio",
+      "zip": "44333",
+      "phone1": "330.321.1236",
+      "phone2": ""
+    }
+  ],
+  "accounts": [
+    {
+      "id": 1,
+      "clientId": 1,
+      "name": "Personal Checking",
+      "type": "Checking"
+    },
+    {
+      "id": 2,
+      "clientId": 1,
+      "name": "Business Checking",
+      "type": "Checking"
+    },
+    {
+      "id": 3,
+      "clientId": 1,
+      "name": "Investment",
+      "type": "Brokerage"
+    },
+    {
+      "id": 4,
+      "clientId": 2,
+      "name": "Checking",
+      "type": "Checking"
+    },
+    {
+      "id": 5,
+      "clientId": 2,
+      "name": "401(k)",
+      "type": "Brokerage"
+    }
+  ],
+  "investments": [
+    {
+      "id": 1,
+      "accountId": 3,
+      "symbol": "MSFT",
+      "numberOfShare": 80,
+      "purchasePrice": 66,
+      "purchaseDate": "10/15/2016"
+    },
+    {
+      "id": 2,
+      "accountId": 3,
+      "symbol": "AAPL",
+      "numberOfShare": 10,
+      "purchasePrice": 109,
+      "purchaseDate": "10/01/2016"
+    },
+    {
+      "id": 3,
+      "accountId": 5,
+      "symbol": "MSFT",
+      "numberOfShare": 25,
+      "purchasePrice": 63.23,
+      "purchaseDate": "10/15/2016"
+    },
+    {
+      "id": 4,
+      "accountId": 5,
+      "symbol": "AAPL",
+      "numberOfShare": 100,
+      "purchasePrice": 105,
+      "purchaseDate": "10/01/2016"
+    }
+  ]
+}

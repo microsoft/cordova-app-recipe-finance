@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{config.appNameShort}}: Client</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">Cancel</button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button (click)="save()">Done</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Name:</ion-label>
+      <ion-input type="text" [(ngModel)]="client.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Email:</ion-label>
+      <ion-input type="email" [(ngModel)]="client.email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Address:</ion-label>
+      <ion-input type="text" [(ngModel)]="client.address"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>City:</ion-label>
+      <ion-input type="text" [(ngModel)]="client.city"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>State:</ion-label>
+      <ion-input type="text" [(ngModel)]="client.state"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Postal Code:</ion-label>
+      <ion-input type="text" [(ngModel)]="client.zip"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Main Phone:</ion-label>
+      <ion-input type="phone" [(ngModel)]="client.phone1"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Alt. Phone:</ion-label>
+      <ion-input type="phone" [(ngModel)]="client.phone2"></ion-input>
+    </ion-item>
+  </ion-list>
+</ion-content>

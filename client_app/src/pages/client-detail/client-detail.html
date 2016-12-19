@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{config.appNameShort}}: Client Detail</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only [hidden]="client.address.length < 1" (click)="showMap()">
+        <ion-icon name="locate"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-segment [(ngModel)]="selectedSegment" color="primary">
+    <ion-segment-button value="client">
+      Client
+    </ion-segment-button>
+    <ion-segment-button value="acct">
+      Accounts
+    </ion-segment-button>
+  </ion-segment>
+  <div [ngSwitch]="selectedSegment">
+    <ion-list *ngSwitchCase="'client'" #clientDetail>
+      <ion-item>
+        <strong>Name:</strong> {{client.name}}
+      </ion-item>
+      <ion-item>
+        <strong>Email:</strong> <a href="mailto:{{client.email | lowercase}}">{{client.email | lowercase}}</a>
+      </ion-item>
+      <ion-item>
+        <strong>Address:</strong> {{client.address}}
+      </ion-item>
+      <ion-item>
+        <strong>City:</strong> {{client.city}}
+      </ion-item>
+      <ion-item>
+        <strong>State:</strong> {{client.state}}
+      </ion-item>
+      <ion-item>
+        <strong>Zip:</strong> {{client.zip}}
+      </ion-item>
+      <ion-item [hidden]="client.phone1.length < 1">
+        <strong>Primary:</strong> <a href="tel:{{client.phone1}}">{{client.phone1}}</a>
+      </ion-item>
+      <ion-item [hidden]="client.phone2.length < 1">
+        <strong>Alt:</strong> <a href="tel:{{client.phone1}}">{{client.phone2}}</a>
+      </ion-item>
+      <p [hidden]="client.address.length < 1">Tap <ion-icon name="locate"></ion-icon> in the toolbar to view a map for this address.</p>
+    </ion-list>
+    <ion-list *ngSwitchCase="'acct'" #accountList>
+      <ion-fab right bottom>
+        <button ion-fab color="primary" (click)="addAccount()">
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-fab>
+      <ion-list-header>
+        {{ accounts.length ? 'Swipe item for options; tap "+"" to add': 'No accounts found; tap "+" to add' }}
+      </ion-list-header>
+      <ion-item-sliding *ngFor="let account of accounts" #slidingItem>
+        <button ion-item (click)="viewAccount(account)">        
+          {{account.name}} 
+      </button>
+        <ion-item-options>
+          <button ion-button (click)="editAccount(account)">          
+          <ion-icon name="open"></ion-icon> Edit </button>
+          <button ion-button color="danger" (click)="deleteAccount(account)">            
+          <ion-icon name="trash"></ion-icon> Delete </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    ({{clientData.storageType}})    
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,37 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>{{config.appNameShort}}: Account</ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">Cancel</button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button ion-button (click)="save()">Done</button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <form [formGroup]="accountForm" novalidate>
+        <ion-item>
+            <ion-label>Name</ion-label>
+            <!--<ion-input type="text" [(ngModel)]="account.name" formControlName="name"></ion-input>-->
+            <ion-input type="text" formControlName="name"></ion-input>
+        </ion-item>        
+        <ion-list radio-group formControlName="type">
+            <!--<ion-list radio-group [(ngModel)]="account.type" formControlName="type">-->
+            <ion-item>
+                <ion-label>Checking</ion-label>
+                <ion-radio value="Checking" checked></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label>Savings</ion-label>
+                <ion-radio value="Savings"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label>Brokerage</ion-label>
+                <ion-radio value="Brokerage"></ion-radio>
+            </ion-item>
+        </ion-list>
+    </form>
+
+</ion-content>

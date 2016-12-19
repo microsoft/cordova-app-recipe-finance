@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar no-border-bottom>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{config.appNameShort}}: Alerts</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list #alertList>
+    <ion-list-header>
+      {{  alerts.length ? 'Swipe item for options': 'No alerts found' }}
+    </ion-list-header>
+    <ion-item-sliding *ngFor="let alert of alerts">
+      <button ion-item (click)="viewAlert(alert)">
+        {{alert.name}} 
+      </button>
+      <ion-item-options>
+        <button ion-button (click)="editAlert(alert)">         
+          <ion-icon name="open"></ion-icon> Edit </button>
+        <button ion-button color="danger" (click)="deleteAlert(alert)">            
+          <ion-icon name="trash"></ion-icon> Delete </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+</ion-content>

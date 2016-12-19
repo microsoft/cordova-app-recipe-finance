@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{config.appNameShort}}: Account Detail</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-fab right bottom>
+    <button ion-fab color="primary" (click)="addInvestment()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+  <ion-list>
+    <ion-item>
+      <p><strong>Account:</strong> {{account.name | uppercase}}</p>
+      <p><strong>Type:</strong> {{account.type | uppercase}}</p>
+    </ion-item>
+  </ion-list>
+  <h1>Investments</h1>
+  <ion-list #investmentList>
+    <ion-list-header>
+      {{ investments.length ? 'Swipe item to delete; tap "+"" to invest': 'No investments found; tap "+" to invest' }}
+    </ion-list-header>
+    <ion-item-sliding *ngFor="let investment of investments">
+      <button ion-item detail-push (click)="viewInvestment(investment)">        
+       <h2>{{investment.symbol | uppercase}}</h2>
+      <p>Shares: {{investment.numberOfShares | number}}</p>
+      <p>Purchase Price: {{investment.purchasePrice | currency}}</p>
+      <p>Purchase Date: {{investment.purchaseDate | date}}</p> 
+      </button>
+      <ion-item-options>
+        <button ion-button color="danger" (click)="deleteInvestment(investment)">            
+          <ion-icon name="trash"></ion-icon> Delete </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    ({{clientData.storageType}})    
+  </ion-toolbar>
+</ion-footer>

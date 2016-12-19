@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{config.appNameShort}}: Settings
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">Cancel</button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button (click)="save()">Done</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    Select a <strong>storage type</strong> for the application:
+  </ion-item>
+  <ion-list radio-group [(ngModel)]="storageType">
+    <ion-item>
+      <ion-label>Online</ion-label>
+      <ion-radio value="online" checked></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Offline</ion-label>
+      <ion-radio value="offline"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Local Storage</ion-label>
+      <ion-radio value="localstorage"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Secure Storage</ion-label>
+      <ion-radio value="securestorage"></ion-radio>
+    </ion-item>
+  </ion-list>
+</ion-content>
