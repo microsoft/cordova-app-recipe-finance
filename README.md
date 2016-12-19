@@ -1,1 +1,3 @@
-Sample code for the Cordova Finance app recipe.
+# Cordova Finance App Recipe
+
+By Jordan Mattheisen and John M. Wargo.
