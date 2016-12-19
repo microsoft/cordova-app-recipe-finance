@@ -1,0 +1,1 @@
+Sample code for the Cordova Finance app recipe.
