@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{config.appNameShort}}: Alert</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item text-wrap>
+        <h1>{{alert.stockName}} ({{alert.symbol}})</h1>
+    </ion-item>
+    <ion-item text-wrap>The alert will trigger on the following option: {{alert.summary}}.</ion-item>
+  </ion-list>
+</ion-content>

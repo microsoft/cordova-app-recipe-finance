@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{config.appNameShort}}: Research</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-segment [(ngModel)]="selectedSegment" color="primary">
+    <ion-segment-button value="search"> Search </ion-segment-button>
+    <ion-segment-button value="topics"> Topics </ion-segment-button>
+  </ion-segment>
+  <div [ngSwitch]="selectedSegment">
+    <ion-list *ngSwitchCase="'search'" #search>
+      <p>Ipsum dolor amet tongue short ribs strip steak cupim, ground round turducken corned beef kevin sausage pork belly turkey
+        pork chop burgdoggen.</p>
+      <form (ngSubmit)="doSearch()">
+        <ion-item>
+          <ion-label>Search Term:</ion-label>
+          <ion-input type="text" [(ngModel)]="searchStr" name="SearchInput"></ion-input>
+        </ion-item>
+        <button ion-button icon-left block><ion-icon name="search"></ion-icon>Search</button>
+      </form>
+      <ion-item text-wrap [hidden]="!hasSearched">
+        {{ hasSearchResults ? 'Search Results.' : 'No results found.' }}
+      </ion-item>
+      <!--<ion-list-header [hidden]="results.length < 1"> Search Results </ion-list-header>
+      <ion-list-header [hidden]="hasSearchResults"> No Results Found </ion-list-header>-->
+      <button ion-item detail-push *ngFor="let stock of results" (click)="viewStock(stock)">
+        {{stock.Symbol}}: {{stock.Name}}<br />Exchange: {{stock.Exchange}}
+      </button>
+    </ion-list>
+    <ion-list *ngSwitchCase="'topics'" #topics>
+      <p>Bacon ipsum dolor amet cow burgdoggen landjaeger jerky turducken rump beef doner beef ribs capicola shoulder corned
+        beef short loin. Fatback tail cow burgdoggen, porchetta pork ham hamburger biltong. Doner sausage pork ham, pastrami
+        porchetta meatball beef ribs sirloin tri-tip prosciutto ham hock. Doner turducken ham hock alcatra bresaola burgdoggen
+        capicola beef ribs. Chuck pork chop prosciutto, chicken pancetta meatloaf ground round spare ribs strip steak beef
+        flank picanha short ribs. Beef ribs pig ham pork chop t-bone ribeye salami meatloaf ball tip tail pork loin brisket
+        leberkas. Shank short loin tongue andouille pork loin hamburger.</p>
+      <p>Venison frankfurter short loin t-bone pork ground round filet mignon hamburger cupim tail corned beef shankle. Andouille
+        cow beef, salami picanha venison sausage leberkas. Beef ribs meatball doner ham, ground round burgdoggen kielbasa
+        chuck. Hamburger tail spare ribs chicken. Pig drumstick kielbasa chuck kevin ham, shoulder filet mignon picanha strip
+        steak t-bone pancetta hamburger. Flank pig filet mignon, frankfurter pork chop porchetta pancetta.</p>
+      <button ion-button (click)="openSite('stocks')" block>Learn about individual stocks</button>
+      <button ion-button (click)="openSite('collegePlans')" block>Compare College Savings Plans</button>
+    </ion-list>
+  </div>
+</ion-content>

@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{config.appNameShort}}: Alert</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">Cancel</button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button (click)="save()">Done</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="alertForm" novalidate>
+    <ion-list>
+      <ion-item text-wrap>
+        <h1>{{alert.stockName}} ({{alert.symbol}})</h1>
+          <p>Select the appropriate action for the alert using the following options.</p>
+      </ion-item>      
+      <ion-item>
+        <ion-label color="primary" floating>Trigger</ion-label>
+        <ion-select formControlName="trigger">
+          <ion-option value="A">Above Threshold</ion-option>
+          <ion-option value="B">Below Threshold</ion-option>
+          <ion-option value="C">Changes Value</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" floating>Threshold</ion-label>
+        <ion-input type="number" formControlName="threshold"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" floating>Unit</ion-label>
+        <ion-select formControlName="unit">
+          <ion-option value="C">Value (Currency)</ion-option>
+          <ion-option value="P">Percentage</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>
