@@ -44,7 +44,7 @@ export class SettingsPage {
     console.log('Settings Form: Saving');
     if (this.oStorageType === this.storageType) {
       console.log('Settings Form: Storage type unchanged');
-      //Otherwise return nothing to the calling page
+      //return nothing to the calling page
       this.view.dismiss();
     } else {
       console.log(`Settings Form: Storage type changed to ${this.storageType}`);

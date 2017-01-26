@@ -1,0 +1,35 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            {{config.appNameShort}}: Stock Selection
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">Cancel</button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button ion-button (click)="save()">Save</button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <p>Enter a company name and tap the Search button, select a company from the results, and then tap Done.</p>
+    <ion-list>
+        <form (ngSubmit)="doSearch()">
+            <ion-item>
+                <ion-label>Company:</ion-label>
+                <ion-input type="text" [(ngModel)]="searchStr" name="SearchInput"></ion-input>
+            </ion-item>
+            <button ion-button icon-left block><ion-icon name="search"></ion-icon>Search</button>
+        </form>
+        <ion-item>         
+            Selected Company: {{stock.name}} ({{stock.symbol}})
+        </ion-item>
+        <ion-item text-wrap [hidden]="!hasSearched">
+            {{ hasSearchResults ? 'Search Results.' : 'No results found.' }}
+        </ion-item>
+        <button ion-item *ngFor="let stock of stockList" (click)="selectStock(stock)">
+            {{stock.Symbol}}: {{stock.Name}}<br />Exchange: {{stock.Exchange}}
+        </button>
+    </ion-list>
+</ion-content>

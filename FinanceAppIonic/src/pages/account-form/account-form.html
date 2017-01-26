@@ -14,11 +14,9 @@
     <form [formGroup]="accountForm" novalidate>
         <ion-item>
             <ion-label>Name</ion-label>
-            <!--<ion-input type="text" [(ngModel)]="account.name" formControlName="name"></ion-input>-->
             <ion-input type="text" formControlName="name"></ion-input>
         </ion-item>        
         <ion-list radio-group formControlName="type">
-            <!--<ion-list radio-group [(ngModel)]="account.type" formControlName="type">-->
             <ion-item>
                 <ion-label>Checking</ion-label>
                 <ion-radio value="Checking" checked></ion-radio>

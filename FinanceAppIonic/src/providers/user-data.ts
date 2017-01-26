@@ -99,7 +99,7 @@ export class UserData {
         return (this.client && this.client.currentUser.userId != '');
     }
 
-    public getAzureClient(): any {
-        return this.client;
-    }
+    // public getAzureClient(): any {
+    //     return this.client;
+    // }
 }

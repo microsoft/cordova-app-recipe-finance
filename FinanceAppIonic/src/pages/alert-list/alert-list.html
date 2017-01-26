@@ -1,33 +1,41 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>{{config.appNameShort}}: Alerts</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{config.appNameShort}}: Alerts</ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-list #alertList>
-    <ion-item text-wrap>
-      {{ alerts.length ? 'Swipe an alert item for options (only edit and delete)': 'No alerts found' }}. Adding alerts is not available in this view; alerts can only be added from the Research or Investments areas of the application.
-    </ion-item>
-    <ion-item-sliding *ngFor="let alert of alerts">
-      <button ion-item text-wrap (click)="viewAlert(alert)">
-        <strong>{{alert.stockName}} ({{alert.symbol}})</strong><br />{{alert.summary}}
-      </button>
-      <ion-item-options>
-        <button ion-button (click)="editAlert(alert)">         
-          <ion-icon name="open"></ion-icon> Edit </button>
-        <button ion-button color="danger" (click)="deleteAlert(alert)">            
-          <ion-icon name="trash"></ion-icon> Delete </button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh">
+        </ion-refresher-content>
+    </ion-refresher>
+    <ion-searchbar showCancelButton="true" (ionInput)="filterList($event)" (ionCancel)="onCancel($event)">
+    </ion-searchbar>
+    <ion-list #alertList>
+        <ion-item text-wrap>
+            {{ alerts.length ? 'Swipe an alert item for options (only edit and delete)': 'No alerts found' }}. Adding alerts is not available in this view; alerts can only be added from the Research or Investments areas of the application.
+        </ion-item>
+        <ion-item-sliding *ngFor="let alert of alerts">
+            <button ion-item text-wrap (click)="viewAlert(alert)">
+                <strong>{{alert.stockName}} ({{alert.symbol}})</strong><br />{{alert.summary}}
+            </button>
+            <ion-item-options>
+                <button ion-button (click)="editAlert(alert)">
+                    <ion-icon name="open"></ion-icon> Edit
+                </button>
+                <button ion-button color="danger" (click)="deleteAlert(alert)">
+                    <ion-icon name="trash"></ion-icon> Delete
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
-    ({{clientData.storageType}})
-  </ion-toolbar>
+    <ion-toolbar>
+        ({{clientData.storageType}})
+    </ion-toolbar>
 </ion-footer>

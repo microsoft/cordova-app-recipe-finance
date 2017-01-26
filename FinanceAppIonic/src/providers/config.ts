@@ -4,38 +4,48 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class Config {
 
+  //=======================================================
+  // Developer Modified settings
+  //
+  // Change the settings in this section for your specific
+  // needs and API keys
+  //=======================================================  
   //String values used in the app page titles and menus
   //The long version of the name appears in the header
   //of the start page
-  appNameLong = 'TACO Investment Services';
+  readonly appNameLong = 'TACO Investment Services';
   //The short version appears in the menu and all the other
   //form and page headers
-  appNameShort = 'TACO';
+  readonly appNameShort = 'TACO';
 
   //change this endpoint for your Azure project
-  authEndpoint = 'https://tacoinvestmenttracker.azurewebsites.net';
-  // authEndpoint = '';
+  readonly authEndpoint = 'https://tacoinvestmenttracker.azurewebsites.net';
+  // readonly authEndpoint = '';
 
   //The MobileServiceClient supports multiple auth providers,
   //for this app, we'll just use AAD.
-  authProvider = 'aad';    //Azure Active Directory
+  readonly authProvider = 'aad';    //Azure Active Directory
 
   //API key used to access the Bing News search API
   //https://www.microsoft.com/cognitive-services/en-us/subscriptions
-  bingSearchKey = '152c382e98cf42cc8867f91d54821003';
+  readonly bingSearchKey = '152c382e98cf42cc8867f91d54821003';
   // bingSearchKey = '';  
 
   //Used when creating secure storage
-  secureStoreName = 'TACO-Investment-Tracker';
+  private secureStoreName = 'TACO-Finance';
 
-  //Storage types
-  public defaultStorageType = 'localstorage';
+  //The default mode for the application. Changed via settings.
+  readonly defaultStorageType = 'localstorage';
+  //=======================================================
+
+  //Other storage settings
   private storageTypeKey = 'storageType';
 
   constructor(
     private storage: Storage
   ) {
-    console.log('Config: Constructor');
+    console.log('Config Provider: Constructor');
+    
     //Warn if our Azure App Service endpoint is not populated in the config file (config.ts)    
     if (!this.authEndpoint) {
       //the user will see an alert if they try to login in online mode

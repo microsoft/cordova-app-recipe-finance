@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AlertController, App, NavController, NavParams, ViewController } from 'ionic-angular';
+import { AlertController, App, ModalController, NavController, NavParams, ViewController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { StockSearch } from '../stock-search/stock-search';
 import { Config } from '../../providers/config';
 
 @Component({
@@ -19,6 +19,7 @@ export class InvestmentForm {
         public app: App,
         public config: Config,
         public formBuilder: FormBuilder,
+        public modalCtrl: ModalController,
         public nav: NavController,
         navParams: NavParams,
         public view: ViewController
@@ -33,6 +34,7 @@ export class InvestmentForm {
             this.investment = {};
             //Then, create each object property for the ngModel
             this.investment.symbol = this.blankStr;
+            this.investment.name = this.blankStr;
             this.investment.numberOfShares = 0;
             this.investment.purchasePrice = 0;
             this.investment.purchaseDate = new Date().toISOString();
@@ -54,7 +56,7 @@ export class InvestmentForm {
             purchasePrice: [
                 this.investment.purchasePrice,
                 //Validators.compose([Validators.pattern('[0-9]*'), Validators.required])
-                Validators.compose([Validators.pattern('[0-9]{1,7}(\.[0-9]+)?$'), Validators.required])                
+                Validators.compose([Validators.pattern('[0-9]{1,7}(\.[0-9]+)?$'), Validators.required])
             ],
             purchaseDate: [
                 this.investment.purchaseDate,
@@ -70,6 +72,20 @@ export class InvestmentForm {
     ionViewDidEnter() {
         //Set the window title for the browser, just because we can     
         this.app.setTitle(this.config.appNameShort + ': Investment');
+    }
+
+    getStock() {
+        let stockModal = this.modalCtrl.create(StockSearch);
+        stockModal.present();
+        //Do something with the returned data
+        stockModal.onDidDismiss(data => {
+            if (data) {
+                this.investment.symbol = data.symbol;
+                this.investment.name = data.name;
+            } else {
+                console.log('No data returned from modal');
+            }
+        });
     }
 
     dismiss() {
@@ -109,5 +125,5 @@ export class InvestmentForm {
             alert.present();
         }
     }
-    
+
 }

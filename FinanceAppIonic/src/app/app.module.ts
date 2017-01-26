@@ -19,6 +19,7 @@ import { ResearchPage } from '../pages/research/research';
 import { ResearchDetailPage } from '../pages/research-detail/research-detail';
 import { SettingsPage } from '../pages/settings/settings';
 import { StartPage } from '../pages/start/start';
+import { StockSearch } from '../pages/stock-search/stock-search';
 
 //Providers
 import { ClientData } from '../providers/client-data';
@@ -47,7 +48,8 @@ import { UserData } from '../providers/user-data';
         ResearchPage,
         ResearchDetailPage,
         SettingsPage,
-        StartPage
+        StartPage,
+        StockSearch
     ],
     imports: [
         IonicModule.forRoot(ClientApp)
@@ -69,7 +71,8 @@ import { UserData } from '../providers/user-data';
         ResearchDetailPage,
         ResearchPage,
         SettingsPage,
-        StartPage
+        StartPage,
+        StockSearch
     ],
     providers: [
         ClientData,

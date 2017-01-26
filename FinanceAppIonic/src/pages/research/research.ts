@@ -14,8 +14,8 @@ export class ResearchPage {
 
   results: Array<any> = [];
   selectedSegment: string = 'search';
-  hasSearched: boolean;
-  hasSearchResults: boolean;
+  hasSearched: boolean = false;
+  hasSearchResults: boolean = false;
   searchStr: string;
 
   constructor(

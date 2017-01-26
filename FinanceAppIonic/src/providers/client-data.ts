@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Events, Platform } from 'ionic-angular';
-//Providers
+// providers
 import { Config } from './config';
 import { ClientDataStorage } from './client-data-storage';
 import { ClientDataOffline } from './client-data-offline';
@@ -20,13 +20,13 @@ export class ClientData {
     public onlineStore: ClientDataOnline,
     public platform: Platform,
   ) {
-    console.log('ClientData: Constructor');
-    //Make sure the platform is ready before you do anything
+    console.log("ClientData: Constructor");
+    // make sure the platform is ready before you do anything
     this.platform.ready().then(() => {
-      console.log('ClientData: Platform is ready');
-      //get the app's configured storage type from localStorage
+      console.log("ClientData: Platform is ready");
+      // get the app's configured storage type from localStorage
       config.getStorageType().then((res) => {
-        //Set the data provider based on the current setting        
+        // set the data provider based on the current setting        
         this.setDataProvider(res);
       });
     });
@@ -35,8 +35,8 @@ export class ClientData {
   public setDataProvider(storageType: string) {
     console.log(`ClientData: Using ${storageType} storage type`);
     this.storageType = storageType;
-    //Set the provider we'll use based on the storage type the user has
-    //configured in the application
+    // set the provider we'll use based on the storage type the user has
+    // configured in the application
     switch (storageType) {
       case 'securestorage':
         this.provider = this.localStore;
@@ -51,18 +51,18 @@ export class ClientData {
         this.provider.init();
         break;
       default:
-        //Use localstorage by default
+        // use localstorage by default
         this.provider = this.localStore;
         this.provider.init(false);
     }
-    //Let the rest of the app know we changed data sources
+    // let the rest of the app know we changed data sources
     this.events.publish('client-data:change');
   }
 
   public showLogin(): boolean {
     return this.storageType == 'online';
-    //Update this later to support offline (if it requires login as well)
-    //return (this.storageType == 'online' || this.storageType == 'offline');
+    // update this later to support offline (if it requires login as well)
+    // return (this.storageType == 'online' || this.storageType == 'offline');
   }
 
 }

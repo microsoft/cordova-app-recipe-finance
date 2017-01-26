@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { AlertController, App, List, ModalController, NavController } from 'ionic-angular';
+import { AlertController, App, List, LoadingController, ModalController, NavController } from 'ionic-angular';
 //Pages
 import { ClientForm } from '../client-form/client-form';
 import { ClientDetail } from '../client-detail/client-detail';
@@ -24,28 +24,25 @@ export class ClientList {
     //The list of all clients, may be filtered using the search bar
     allClients: any[] = [];
 
-    //SearchBar stuff
-    filterStr: string = ''; //the search input
-
     constructor(
         public alertController: AlertController,
         public app: App,
         public clientData: ClientData,
         public config: Config,
+        public loadingCtrl: LoadingController,
         public modalCtrl: ModalController,
         public nav: NavController,
         public zone: NgZone
     ) { }
 
     ionViewDidLoad() {
-        // console.log('Client List: Entering ionViewDidLoad');
+        //Update the client list on the page
+        this.updateClients();
     }
 
     ionViewDidEnter() {
         //Set the window title for the browser, just because we can     
         this.app.setTitle(this.config.appNameShort + ': Client List');
-        //Update the client list on the page
-        this.updateClients();
     }
 
     filterList(ev: any) {
@@ -59,8 +56,7 @@ export class ClientList {
                 val = val.toLowerCase();
                 this.clients = this.allClients.filter((item) => {
                     return (item.name.toLowerCase().indexOf(val) > -1);
-                });
-                //});
+                });                
             } else {
                 //no search string, so we'll use the full list
                 this.clients = this.allClients;
@@ -77,21 +73,31 @@ export class ClientList {
 
     doRefresh(refresher) {
         console.log('Client List: Entering doRefresh');
-        this.updateClients().then(refresher.complete.bind(refresher));
+        this.updateClients()
+            .then(refresher.complete.bind(refresher));
     }
 
     updateClients() {
         //Refresh the client list content on the page
         console.log('Client List: Entering updateClients');
-        // Close any open sliding items when the schedule updates
+        // Close any open sliding items
         this.clientList && this.clientList.closeSlidingItems();
-        return this.clientData.provider.getClients().then(clients => {
-            //console.dir(clients);
-            this.zone.run(() => {
-                this.clients = clients;
-                this.allClients = clients;
-            });
+        //Create a loading indicator
+        let loader = this.loadingCtrl.create({
+            content: "Retrieving Client list"
         });
+        loader.present();
+        // Close any open sliding items
+        this.clientList && this.clientList.closeSlidingItems();
+        return this.clientData.provider.getClients()
+            .then(clients => {
+                //Hide the loading indicator
+                loader.dismiss();
+                this.zone.run(() => {
+                    this.clients = clients;
+                    this.allClients = clients;
+                });
+            });
     }
 
     showSettings() {
@@ -121,6 +127,8 @@ export class ClientList {
 
     addClient() {
         console.log('Client List: Entering addClient');
+        // Close any open sliding items
+        this.clientList && this.clientList.closeSlidingItems();
         //Create the client form in a modal dialog
         let clientModal = this.modalCtrl.create(ClientForm);
         //display the modal form
@@ -144,8 +152,7 @@ export class ClientList {
 
     deleteClient(client: any) {
         console.log(`Client List: Deleting "${client.name}"`);
-        //close any sliding items that may be open, so they're not open
-        //when we get back from the modal dialog
+        // Close any open sliding items
         this.clientList && this.clientList.closeSlidingItems();
         //Create the client form in a modal dialog
         let alertDlg = this.alertController.create({
@@ -175,8 +182,7 @@ export class ClientList {
 
     editClient(client: any) {
         console.log(`Client List: Editing "${client.name}"`);
-        //close any sliding items that may be open, so they're not open
-        //when we get back from the modal dialog
+        // Close any open sliding items
         this.clientList && this.clientList.closeSlidingItems();
         //Create the client form in a modal dialog
         let clientModal = this.modalCtrl.create(ClientForm, { 'client': client });
@@ -188,7 +194,7 @@ export class ClientList {
                 //Process updated data
                 this.clientData.provider.updateClient(data).then((res) => {
                     console.log('Client List: Client updated');
-                    this.updateClients();
+                    //this.updateClients();
                 });
             } else {
                 //The user must have cancelled
@@ -199,6 +205,8 @@ export class ClientList {
 
     viewClient(client: any) {
         console.log(`Client List: Opening client "${client.name}"`);
+        // Close any open sliding items
+        this.clientList && this.clientList.closeSlidingItems();
         this.nav.push(ClientDetail, { client: client });
     }
 

@@ -1,34 +1,35 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>
-      {{config.appNameShort}}: Investment
-    </ion-title>
-    <ion-buttons start>
-      <button ion-button (click)="dismiss()">Cancel</button>
-    </ion-buttons>
-    <ion-buttons end>
-      <button ion-button (click)="save()">Done</button>
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>
+            {{config.appNameShort}}: Investment
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">Cancel</button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button ion-button (click)="save()">Done</button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="investmentForm" novalidate>
-    <ion-item>
-      <ion-label floating>Symbol</ion-label>
-      <ion-input type="text" formControlName="symbol"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating># of shares</ion-label>
-      <ion-input type="number" formControlName="numberOfShares"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Purchase Price</ion-label>
-      <ion-input type="number" formControlName="purchasePrice"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Purchase Date</ion-label>
-      <ion-datetime displayFormat="MMMM DD, YYYY" pickerFormat="MMMM DD YYYY" formControlName="purchaseDate"></ion-datetime>
-    </ion-item>
-  </form>
+    <form [formGroup]="investmentForm" novalidate>
+        <button ion-button (click)="getStock()">Button</button>
+        <ion-item>
+            <ion-label floating>Symbol</ion-label>
+            <ion-input type="text" formControlName="symbol"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating># of shares</ion-label>
+            <ion-input type="number" formControlName="numberOfShares"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Purchase Price</ion-label>
+            <ion-input type="number" formControlName="purchasePrice"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Purchase Date</ion-label>
+            <ion-datetime displayFormat="MMMM DD, YYYY" pickerFormat="MMMM DD YYYY" formControlName="purchaseDate"></ion-datetime>
+        </ion-item>
+    </form>
 </ion-content>
