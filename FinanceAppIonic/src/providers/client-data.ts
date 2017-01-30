@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Events, Platform } from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 // providers
 import { Config } from './config';
 import { ClientDataStorage } from './client-data-storage';
@@ -14,7 +14,7 @@ export class ClientData {
 
   constructor(
     private config: Config,
-    public events: Events,
+    //public events: Events,
     public localStore: ClientDataStorage,
     public offlineStore: ClientDataOffline,
     public onlineStore: ClientDataOnline,
@@ -25,7 +25,7 @@ export class ClientData {
     this.platform.ready().then(() => {
       console.log("ClientData: Platform is ready");
       // get the app's configured storage type from localStorage
-      config.getStorageType().then((res) => {
+      config.getStorageType().then((res) => {        
         // set the data provider based on the current setting        
         this.setDataProvider(res);
       });
@@ -55,8 +55,6 @@ export class ClientData {
         this.provider = this.localStore;
         this.provider.init(false);
     }
-    // let the rest of the app know we changed data sources
-    this.events.publish('client-data:change');
   }
 
   public showLogin(): boolean {

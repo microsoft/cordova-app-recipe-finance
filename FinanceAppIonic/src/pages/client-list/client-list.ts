@@ -111,6 +111,9 @@ export class ClientList {
         clientModal.onDidDismiss(data => {
             console.log('Client List: Settings form dismissed');
             if (data) {
+                //We're changing data sources, so clear the client lists
+                this.clients = [];
+                this.allClients = [];
                 console.log('Client List: Saving updated storage type');
                 //Set the data provider based on the value returned by 
                 //the settings page        

@@ -24,6 +24,9 @@ export class ClientDataOffline {
             buttons: [{ text: 'OK' }]
         });
         alert.present();
+
+        // let the rest of the app know we changed data sources
+        //this.events.publish('client-data:change');
     }
 
     /*******************************************************

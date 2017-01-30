@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { AlertController } from 'ionic-angular';
+import { AlertController, Events, LoadingController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { SecureStorage } from 'ionic-native';
 import { Config } from './config';
@@ -10,7 +10,7 @@ export class ClientDataStorage {
 
     //Set this to false to skip importing data if storage
     //doesn't contain any values
-    useSampleData = false;
+    useSampleData = true;
 
     //The storage keys for our app data
     keyAccounts = 'Accounts';
@@ -27,7 +27,9 @@ export class ClientDataStorage {
     constructor(
         private alertController: AlertController,
         private config: Config,
+        private events: Events,
         private http: Http,
+        public loadingCtrl: LoadingController,
         private localstorage: Storage
     ) {
         console.log('ClientDataStorage: Constructor');
@@ -49,13 +51,27 @@ export class ClientDataStorage {
             if (window['cordova']) {
                 //Then use the SecureStorage 'driver'
                 this.storage = this.secureStorage;
-                console.log('ClientDataSecurestorage: Creating secure storage');
+                console.log(`ClientDataSecurestorage: Creating secure storage ${this.config.secureStoreName}`);
+                //Create a loading indicator
+                let loader = this.loadingCtrl.create({
+                    content: "Initializing Secure Storage Provider"
+                });
+                loader.present();
                 this.storage.create(this.config.secureStoreName).then(
                     () => {
                         console.log('ClientDataSecurestorage: Storage created');
-                        // console.dir(this.storage);
+                        //Hide the loading indicator
+                        loader.dismiss();
+                        // let the rest of the app know we changed data sources
+                        this.events.publish('client-data:change');
                     },
-                    error => console.error(error)
+                    error => {
+                        //Hide the loading indicator
+                        loader.dismiss();
+                        console.log('ClientDataSecurestorage: Unable to create secure storage');
+                        //Display an error message
+                        this.handleError(error);
+                    }
                 );
             } else {
                 console.log('ClientDataSecurestorage: Secure storage not available, switching to localstorage');
@@ -68,12 +84,31 @@ export class ClientDataStorage {
                 alert.present();
                 //Then use the localstorage provider
                 this.storage = this.localstorage;
+                // let the rest of the app know we changed data sources
+                this.events.publish('client-data:change');
             }
         } else {
             console.log('ClientDataStorage: Localstorage option enabled');
             //Then use the localstorage provider
             this.storage = this.localstorage;
+            // let the rest of the app know we changed data sources
+            this.events.publish('client-data:change');
         }
+    }
+
+    private handleError(error) {
+        //Executed whever remote data access encounters an error
+        console.log('ClientDataSecurestorage: handleError()');
+        console.dir(error);
+        var text = error + (error.request ? ' - ' + error.request.status : '');
+        console.error(text);
+        //Tell the user what happened
+        let alert = this.alertController.create({
+            title: this.config.appNameShort + ' Data Access Error',
+            message: `An error ocurred while accessing the app's data: ${text}`,
+            buttons: [{ text: 'OK' }]
+        });
+        alert.present();
     }
 
     private sortByName(data: Array<any>): Array<any> {
@@ -132,7 +167,7 @@ export class ClientDataStorage {
             console.log('ClientDataStorage: Saving updated client list to storage');
             this.storage.set(this.keyClients, JSON.stringify(this.clients)).then(res => {
                 resolve(res);
-            });
+            }, (error) => this.handleError(error));
         });
     }
 
@@ -172,6 +207,8 @@ export class ClientDataStorage {
                     //Parse the json data from the file
                     resolve(data.json()[ref.toLowerCase()]);
                 }, (error) => {
+                    //Display an error message
+                    this.handleError(error);
                     resolve([]);
                 });
             } else {
@@ -196,7 +233,7 @@ export class ClientDataStorage {
                     console.log('ClientDataStorage: Storage get completed');
                     //Do we have a result?
                     if (savedClients) {
-                        console.log('ClientDataStorage: Parsing client data from cache');
+                        console.log('ClientDataStorage: Parsing client data from storage');
                         //Store the data locally so the other methods will have access to it        
                         this.clients = JSON.parse(savedClients);
                         //Return the data if it exists
@@ -205,12 +242,18 @@ export class ClientDataStorage {
                         //We didn't get a result, so there must not be any data there
                         //Go ahead and import data from the included data file
                         this.importData(this.keyClients).then(clients => {
+                            console.dir(clients);
                             console.log('ClientDataStorage: Saving imported client list to storage');
-                            this.storage.set(this.keyClients, JSON.stringify(this.clients)).then(() => {
+                            this.storage.set(this.keyClients, JSON.stringify(clients)).then(() => {
                                 this.clients = clients;
                                 resolve(clients);
+                            }, error => {
+                                console.log('ClientDataStorage: Unable to save imported client list');
+                                //Display an error message
+                                this.handleError(error);
+                                resolve([]);
                             });
-                        }, () => resolve([]));
+                        });
                     }
                 }, error => {
                     //This happens when using SecureStorage, the get function returns

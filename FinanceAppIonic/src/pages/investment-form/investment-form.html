@@ -13,8 +13,7 @@
 </ion-header>
 
 <ion-content>
-    <form [formGroup]="investmentForm" novalidate>
-        <button ion-button (click)="getStock()">Button</button>
+    <form [formGroup]="investmentForm" novalidate>       
         <ion-item>
             <ion-label floating>Symbol</ion-label>
             <ion-input type="text" formControlName="symbol"></ion-input>

@@ -37,8 +37,7 @@ export class InvestmentForm {
             this.investment.name = this.blankStr;
             this.investment.numberOfShares = 0;
             this.investment.purchasePrice = 0;
-            this.investment.purchaseDate = new Date().toISOString();
-            // console.dir(this.investment);
+            this.investment.purchaseDate = new Date().toISOString();            
         }
 
         this.investmentForm = formBuilder.group({
@@ -73,29 +72,13 @@ export class InvestmentForm {
         //Set the window title for the browser, just because we can     
         this.app.setTitle(this.config.appNameShort + ': Investment');
     }
-
-    getStock() {
-        let stockModal = this.modalCtrl.create(StockSearch);
-        stockModal.present();
-        //Do something with the returned data
-        stockModal.onDidDismiss(data => {
-            if (data) {
-                this.investment.symbol = data.symbol;
-                this.investment.name = data.name;
-            } else {
-                console.log('No data returned from modal');
-            }
-        });
-    }
-
+   
     dismiss() {
-        console.log('Investment Form: Canceling');
         //Since the user cancelled, don't return any data to the page
         this.view.dismiss();
     }
 
     save() {
-        console.log('Investment Form: Saving');
         // console.dir(this.investmentForm);  
         //Is the input form valid?      
         if (this.investmentForm.valid) {

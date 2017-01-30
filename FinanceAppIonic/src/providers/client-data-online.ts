@@ -24,6 +24,9 @@ export class ClientDataOnline {
 
     public init() {
         console.log('ClientDataOnline: Init');
+        // let the rest of the app know we changed data sources
+        this.events.publish('client-data:change');
+
         // //Are we running on a client that has the WindowsAzure client?
         // if (typeof WindowsAzure == "undefined") {
         //     //We'll be using mock data
