@@ -154,9 +154,9 @@ To build the TACO Finance App using Visual Studio, you must install the followin
 
 Some of the code listings for this application are quite long, so rather than make you copy large blocks of code from this document, you’ll start by cloning the project’s Github repository to your local system to streamline this exercise. Open a terminal window and navigate to the folder where you want to store the code and execute the following command:
 
-	```
-	git clone https://github.com/Microsoft/cordova-app-recipe-finance
-	```
+```
+git clone https://github.com/Microsoft/cordova-app-recipe-finance
+```
 
 ### Create and Configure the Ionic Project
 
@@ -262,7 +262,7 @@ The application’s menu displays on many, but not all pages in the application.
 
 	These statements load some additional components that will be used soon.
 
-10.	Immediately below the import statements, add the following interface definition:
+3.	Immediately below the import statements, add the following interface definition:
 
 	```TypeScript
 	export interface PageObj {
@@ -276,12 +276,12 @@ The application’s menu displays on many, but not all pages in the application.
 
 	This defines an interface for the menu item object. You’ll see how they’re used in a minute.
 
-3.	In the constructor for the `MyApp` class, add the following line as an input parameter in the constructor:
+4.	In the constructor for the `MyApp` class, add the following line as an input parameter in the constructor:
 
 	```TypeScript
 	public menu: MenuController,
 	```
-
+	
 	When you’re done, the constructor should look like the following:
 
 	```TypeScript
@@ -290,8 +290,8 @@ The application’s menu displays on many, but not all pages in the application.
 	  platform: Platform
 	)
 	```
- 
-4.	Inside the `MyApp` class, add the following code:
+
+5.	Inside the `MyApp` class, add the following code:
 
 	```TypeScript
 	// the root nav is a child of the root app component
@@ -668,7 +668,7 @@ As an introduction to generating pages using the Ionic CLI, lets add an about pa
 
 	This creates a new `about` folder in `src\pages` and populates the folder with the following files: `about.html`, `about.scss`, and `about.ts` as shown in the following figure. The `about.html` file contains the page’s HTML markup, the `about.scss` holds the page’s SASS content, and the `about.ts` contains the page’s TypeScript code.
 
-![Solution Explorer: About Page Folder](media/02/figure-15.png) 
+	![Solution Explorer: About Page Folder](media/02/figure-15.png) 
 
 3.	Now that you have the page, you must let the application know about it. Open the project’s `src\app\app.module.ts` file. At the top of the file, add the following `import` statement:
 
