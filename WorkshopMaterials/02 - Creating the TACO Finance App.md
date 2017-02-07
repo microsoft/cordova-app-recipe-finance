@@ -72,7 +72,7 @@ Code in the component references the client-detail and client-form pages.
  
 On the back-end, the application makes use of several Microsoft cloud services to deliver capabilities for the client application:
 
-+	[Azure Active Directory}(https://www.microsoft.com/en-us/cloud-platform/azure-active-directory) – Provides a cloud-based implementation of Microsoft Active Directory that application uses to authenticate users. 
++	[Azure Active Directory](https://www.microsoft.com/en-us/cloud-platform/azure-active-directory) – Provides a cloud-based implementation of Microsoft Active Directory that application uses to authenticate users. 
 +	[Azure Functions](https://azure.microsoft.com/en-us/services/functions/) – Manages the alerting capabilities of the app. 
 +	[Azure Mobile App Service](https://azure.microsoft.com/en-us/services/app-service/mobile/) – Provides authentication services for the mobile application, data storage (using Azure Easy tables) and data synchronization (using offline data sync). 
 +	[Azure Notification Hub](https://azure.microsoft.com/en-us/services/notification-hubs/) – Manages delivery of alert notifications to the mobile app.
@@ -183,7 +183,7 @@ You’ll start by creating and configuring an Ionic project in Visual Studio. Op
 5.	Set the appropriate project settings in the editor’s **Common** panel. At a minimum, you should give the project a recognizable **Display Name** and a unique **Package Name**. Populate the project’s **Author** field with your name (or an alias if you’re so inclined) and a **Description**.
 Press **Ctrl**-**S** to save your changes to the file.
  
-6.	The Ionic Storage provider uses the **Cordova SQLite Storage plugin** ([cordova-sqlite-storage plugin](https://github.com/litehelpers/Cordova-sqlite-storage)) under the covers, so lets add it to the project. Switch to the **Plugins** pane shown on the left of the following figure. Select the Cordova Sqlite Storage plugin as shown in the figure, and click the **Add** button to add the plugin to the project.
+6.	The Ionic Storage provider uses the **Cordova SQLite Storage plugin** ([cordova-sqlite-storage plugin](https://github.com/litehelpers/Cordova-sqlite-storage)), so lets add it to the project. Switch to the **Plugins** pane shown on the left of the following figure. Select the Cordova Sqlite Storage plugin as shown in the figure, and click the **Add** button to add the plugin to the project.
 
 	![Adding the Cordova SQLite Storage Plugin to the Project](media/02/figure-11.png) 
  
@@ -466,7 +466,7 @@ Visual Studio and TACO deliver a robust development and debugging environment fo
 	}
 	```
 
-	The point of this provider is to provide a single place to manage all application settings. The code contains some constants you should change for your implementation of the app as well as API keys the application. The provider also acts as an interface for managing app settings (added later) that can be set dynamically by the user, but will persist between sessions.
+	The point of this provider is to provide a single place to manage all application settings. The code contains some constants you should change for your implementation of the app as well as API keys for the application. The provider also acts as an interface for managing app settings (added later) that can be set dynamically by the user, but will persist between sessions.
 
 	The `appNameLong` and `appNameShort` variables define string values displayed within the app. The contents of the `appNameLong` variable are displayed in the toolbar on the application’s **Start** page (added when we add support for the Online use case in a later tutorial). The contents of `appNameShort` are displayed on the top of every other page and any alert dialogs presented to users. You can leave them as is, or change the values to match your needs.
 
