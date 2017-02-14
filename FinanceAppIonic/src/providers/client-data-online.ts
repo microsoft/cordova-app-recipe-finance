@@ -1,19 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AlertController, Events } from 'ionic-angular';
+//Providers
 import { Config } from './config';
 
 @Injectable()
 export class ClientDataOnline {
 
     azureAppService: Microsoft.WindowsAzure.MobileServiceClient;
-
-    //Define some constants for our table names, so they
-    //aren't represented as strings all throughtout the code
-    tableAccounts = 'Accounts';
-    tableAlerts = 'Alerts';
-    tableClients = 'Clients';
-    tableInvestments = 'Investments';
-
+    
     constructor(
         private alertController: AlertController,
         private config: Config,
@@ -25,33 +19,7 @@ export class ClientDataOnline {
     public init() {
         console.log('ClientDataOnline: Init');
         // let the rest of the app know we changed data sources
-        this.events.publish('client-data:change');
-
-        // //Are we running on a client that has the WindowsAzure client?
-        // if (typeof WindowsAzure == "undefined") {
-        //     //We'll be using mock data
-        //     console.warn('ClientDataOnline: Skipping login event listeners');
-        // } else {
-        //     console.log('ClientDataOnline: Setting login event listeners');
-        //     //Subscribe to the login event so we can set the app's 
-        //     //Azure MobileServiceClient object when the user logs in      
-        //     this.events.subscribe('user:login', (data) => {
-        //         console.log('ClientDataOnline: Processing user:login event');
-        //         //Pull the client object off of the data passed through the login event        
-        //         this.azureAppService = data.client;
-        //     });
-
-        //     //Subscribe to the logout event so we can clear the app's 
-        //     //Azure MobileServiceClient object when the user logs out      
-        //     this.events.subscribe('user:logout', () => {
-        //         console.log('ClientDataOnline: Processing user:logout event');
-        //         //If we have an azureAppService object
-        //         if (this.azureAppService) {
-        //             //clear it out (set it to null)
-        //             this.azureAppService = null;
-        //         }
-        //     });
-        // }
+        this.events.publish('client-data:change');       
     }
 
     public setClientObject(client) {
@@ -84,7 +52,7 @@ export class ClientDataOnline {
             //Are we logged in?
             if (this.azureAppService) {
                 //Get a reference to the table we need
-                let clientsTable = this.azureAppService.getTable(this.tableClients);
+                let clientsTable = this.azureAppService.getTable(this.config.tableClients);
                 clientsTable
                     //Sort by account name
                     .orderBy('name')
@@ -115,7 +83,7 @@ export class ClientDataOnline {
             //Are we logged in?
             if (this.azureAppService) {
                 //Get a reference to the table we need
-                let clientsTable = this.azureAppService.getTable(this.tableClients);
+                let clientsTable = this.azureAppService.getTable(this.config.tableClients);
                 //insert the record in the table
                 clientsTable.insert(client).then((data) => {
                     //Return the data to the caller
@@ -150,7 +118,7 @@ export class ClientDataOnline {
         return new Promise(resolve => {
             //Finally, start on deleting the actual client
             //start by getting a reference to the clients table 
-            let clientsTable = this.azureAppService.getTable(this.tableClients);
+            let clientsTable = this.azureAppService.getTable(this.config.tableClients);
             //delete the record
             clientsTable.del({ id: recordID }).then(data => {
                 console.log(`ClientDataOnline: Successfully deleted client (${data})`);
@@ -234,7 +202,7 @@ export class ClientDataOnline {
             //Are we logged in?
             if (this.azureAppService) {
                 //Get a reference to the table we need
-                let clientsTable = this.azureAppService.getTable(this.tableClients);
+                let clientsTable = this.azureAppService.getTable(this.config.tableClients);
                 //update the record in the table
                 clientsTable.update(client).then((data) => {
                     //Return the data to the caller
@@ -264,7 +232,7 @@ export class ClientDataOnline {
             //Are we logged in?
             if (this.azureAppService) {
                 //Get a reference to the table we need      
-                let accountsTable = this.azureAppService.getTable(this.tableAccounts);
+                let accountsTable = this.azureAppService.getTable(this.config.tableAccounts);
                 //Read all values from the table
                 accountsTable
                     //Only get the accounts for the current client
@@ -298,7 +266,7 @@ export class ClientDataOnline {
             //Are we logged in?
             if (this.azureAppService) {
                 //Get a reference to the table we need
-                let accountsTable = this.azureAppService.getTable(this.tableAccounts);
+                let accountsTable = this.azureAppService.getTable(this.config.tableAccounts);
                 //insert the record in the table
                 accountsTable.insert(account).then((data) => {
                     //Return the data to the caller
@@ -333,7 +301,7 @@ export class ClientDataOnline {
         return new Promise(resolve => {
             //Finally, start on deleting the actual account
             //start by getting a reference to the accounts table 
-            let accountsTable = this.azureAppService.getTable(this.tableAccounts);
+            let accountsTable = this.azureAppService.getTable(this.config.tableAccounts);
             //delete the record
             accountsTable.del({ id: recordID }).then((data) => {
                 console.log(`ClientDataOnline: Successfully deleted account (${data})`);
@@ -414,7 +382,7 @@ export class ClientDataOnline {
             //Are we logged in?
             if (this.azureAppService) {
                 //Get a reference to the table we need
-                let accountsTable = this.azureAppService.getTable(this.tableAccounts);
+                let accountsTable = this.azureAppService.getTable(this.config.tableAccounts);
                 //Update the record in the table
                 accountsTable.update(account).then((data) => {
                     //Return the data to the caller
@@ -444,7 +412,7 @@ export class ClientDataOnline {
             //Are we logged in?
             if (this.azureAppService) {
                 //Get a reference to the table we need
-                let investmentsTable = this.azureAppService.getTable(this.tableInvestments);
+                let investmentsTable = this.azureAppService.getTable(this.config.tableInvestments);
                 //Read all values from the table
                 investmentsTable
                     //Only get the accounts for the current client
@@ -478,7 +446,7 @@ export class ClientDataOnline {
             //Are we logged in?
             if (this.azureAppService) {
                 //Get a reference to the table we need
-                let investmentsTable = this.azureAppService.getTable(this.tableInvestments);
+                let investmentsTable = this.azureAppService.getTable(this.config.tableInvestments);
                 //insert the record in the table
                 investmentsTable.insert(investment).then((data) => {
                     //Return the data to the caller
@@ -504,7 +472,7 @@ export class ClientDataOnline {
             //Are we logged in?
             if (this.azureAppService) {
                 //Get a reference to the table we need
-                let investmentsTable = this.azureAppService.getTable(this.tableInvestments);
+                let investmentsTable = this.azureAppService.getTable(this.config.tableInvestments);
                 //Delete the record
                 investmentsTable.del({ id: recordID }).then((data) => {
                     //Return the data to the caller
@@ -534,7 +502,7 @@ export class ClientDataOnline {
             //Are we logged in?
             if (this.azureAppService) {
                 //Get a reference to the table we need
-                let alertsTable = this.azureAppService.getTable(this.tableAlerts);
+                let alertsTable = this.azureAppService.getTable(this.config.tableAlerts);
                 //did we get the table?
                 alertsTable
                     //Sort by account name
@@ -566,7 +534,7 @@ export class ClientDataOnline {
             //Are we logged in?
             if (this.azureAppService) {
                 //Get a reference to the table we need
-                let alertsTable = this.azureAppService.getTable(this.tableAlerts);
+                let alertsTable = this.azureAppService.getTable(this.config.tableAlerts);
                 //insert the record in the table
                 alertsTable.insert(alert).then((data) => {
                     //Return the data to the caller
@@ -592,7 +560,7 @@ export class ClientDataOnline {
             //Are we logged in?
             if (this.azureAppService) {
                 //Get a reference to the table we need
-                let alertsTable = this.azureAppService.getTable(this.tableAlerts);
+                let alertsTable = this.azureAppService.getTable(this.config.tableAlerts);
                 //delete the record
                 alertsTable.del({ id: recordID }).then((data) => {
                     //Return the data to the caller
@@ -618,7 +586,7 @@ export class ClientDataOnline {
             //Are we logged in?
             if (this.azureAppService) {
                 //Get a reference to the table we need
-                let alertsTable = this.azureAppService.getTable(this.tableAlerts);
+                let alertsTable = this.azureAppService.getTable(this.config.tableAlerts);
                 //update the record in the table
                 alertsTable.update(alert).then((data) => {
                     //Return the data to the caller

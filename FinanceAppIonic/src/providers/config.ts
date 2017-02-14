@@ -41,6 +41,13 @@ export class Config {
     //Other storage settings
     private readonly storageTypeKey = 'storageType';
 
+    //Define some constants for our table names, so they
+    //aren't represented as strings all throughtout the code
+    public readonly tableAccounts = 'Accounts';
+    public readonly tableAlerts = 'Alerts';
+    public readonly tableClients = 'Clients';
+    public readonly tableInvestments = 'Investments';
+
     constructor(
         private storage: Storage
     ) {

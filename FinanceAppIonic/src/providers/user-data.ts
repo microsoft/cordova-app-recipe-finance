@@ -9,7 +9,7 @@ import { Config } from './config';
 export class UserData {
 
     //Used to access Azure Mobile App Service services (auth, data access, etc)
-    client: Microsoft.WindowsAzure.MobileServiceClient;
+    private client: Microsoft.WindowsAzure.MobileServiceClient;
 
     constructor(
         public alertController: AlertController,
@@ -24,18 +24,17 @@ export class UserData {
         if (typeof WindowsAzure == "undefined") {
             //We're running in the browser, not a Cordova client
             console.warn('Running in demo mode (mock data)');
-            //setup the client for local data access
-            this.clientData.setDataProvider(this.config.defaultStorageType);
-            //then let the user know server access isn't available
+            // Let the user know server access isn't available
             let alert = this.alertController.create({
                 title: this.config.appNameShort,
                 message: `The <strong>Windows Azure Mobile Client</strong> is not available, using mock data instead.<br /><br />Did you remember to install the plugin?`,
                 buttons: [{
                     text: 'OK',
                     handler: data => {
-                        //Go ahead and simulate login, all you'll get is local, mock data
-                        //with no updates
-                        this.events.publish('user:login', { 'client': {} });
+                        //setup the client for local data access
+                        this.clientData.setDataProvider(this.config.defaultStorageType);
+                        // let the rest of the app know we changed data sources
+                        this.events.publish('client-data:change');
                     }
                 }]
             });
@@ -99,7 +98,4 @@ export class UserData {
         return (this.client && this.client.currentUser.userId != '');
     }
 
-    // public getAzureClient(): any {
-    //     return this.client;
-    // }
 }

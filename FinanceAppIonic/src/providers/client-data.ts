@@ -25,7 +25,7 @@ export class ClientData {
     this.platform.ready().then(() => {
       console.log("ClientData: Platform is ready");
       // get the app's configured storage type from localStorage
-      config.getStorageType().then((res) => {        
+      config.getStorageType().then((res) => {
         // set the data provider based on the current setting        
         this.setDataProvider(res);
       });
@@ -46,7 +46,7 @@ export class ClientData {
         this.provider = this.onlineStore;
         this.provider.init();
         break;
-      case 'offline':        
+      case 'offline':
         this.provider = this.offlineStore;
         this.provider.init();
         break;
@@ -59,8 +59,8 @@ export class ClientData {
 
   public showLogin(): boolean {
     return this.storageType == 'online';
-    // update this later to support offline (if it requires login as well)
-    // return (this.storageType == 'online' || this.storageType == 'offline');
+    // may need to update this later to support offline (if it requires login as well)
+    //return (this.storageType == 'online' || this.storageType == 'offline');
   }
 
 }

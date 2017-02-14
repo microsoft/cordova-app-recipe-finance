@@ -82,7 +82,6 @@ export class ClientApp {
                 //We're logging in, so we the appropriate provider needs access to the
                 //client object. 
                 clientData.provider.setClientObject(data.client);
-                //======
                 /*  Setting the client object (above) used to be handled by a login event 
                 handler in the online provider. However, we ran into a timing issue where 
                 the following line of code executed before the provider received the 
@@ -94,7 +93,7 @@ export class ClientApp {
                 logic is safe here as at this point, the app.component knows whether it 
                 needs to support an authenticated user or not at this point and let the
                 provider merely manage access to data. */
-                //======
+
                 //Open the client list page now that we're logged in
                 this.nav.setRoot(ClientList);
             });
