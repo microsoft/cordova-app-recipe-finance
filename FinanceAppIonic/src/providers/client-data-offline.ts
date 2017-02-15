@@ -7,8 +7,11 @@ import { Config } from './config';
 export class ClientDataOffline {
 
     private client: Microsoft.WindowsAzure.MobileServiceClient;
-    private store: Microsoft.WindowsAzure.MobileServiceSqliteStore;
-    private syncContext: Microsoft.WindowsAzure.MobileServiceSyncContext;
+    private store: any;
+    private syncContext: any;
+    // private client: Microsoft.WindowsAzure.MobileServiceClient;
+    // private store: Microsoft.WindowsAzure.MobileServiceSqliteStore;
+    // private syncContext: Microsoft.WindowsAzure.MobileServiceSyncContext;
 
     constructor(
         private alertController: AlertController,
@@ -16,7 +19,6 @@ export class ClientDataOffline {
         private events: Events,
     ) {
         console.log('ClientDataOffline: Constructor');
-
     }
 
     public init() {
@@ -39,20 +41,63 @@ export class ClientDataOffline {
                 this.client = new WindowsAzure.MobileServiceClient(this.config.authEndpoint);
                 if (this.client) {
                     // Get the sync context from the client
+                    console.log('Getting sync context');
                     this.syncContext = this.client.getSyncContext();
 
                     //Now create the store object
+                    console.log('Creating store');
                     var store = new WindowsAzure.MobileServiceSqliteStore('store.db');
 
                     store.defineTable({
-                        name: 'todoitem',
+                        name: this.config.tableClients,
+                        columnDefinitions: {
+                            id: 'string',
+                            version: 'version',
+                            name: 'string',
+                            email: 'string',
+                            address: 'string',
+                            city: 'string',
+                            state: 'string',
+                            zip: 'string',
+                            phone1: 'string',
+                            phone2: 'string',
+                            userId: 'string'
+                        }
+                    }).then(function () {
+                        // table definition successful.
+                    }, function (error) {
+                        // table definition failed. handle error.
+                    });
+
+                    store.defineTable({
+                        name: this.config.tableAccounts,
                         columnDefinitions: {
                             id: 'string',
                             text: 'string',
                             complete: 'boolean',
                             version: 'string'
                         }
+                    }).then(function () {
+                        // table definition successful.
+                    }, function (error) {
+                        // table definition failed. handle error.
                     });
+
+                    store.defineTable({
+                        name: this.config.tableInvestments,
+                        columnDefinitions: {
+                            id: 'string',
+                            text: 'string',
+                            complete: 'boolean',
+                            version: 'string'
+                        }
+                    }).then(function () {
+                        // table definition successful.
+                    }, function (error) {
+                        // table definition failed. handle error.
+                    });
+
+
 
                 } else {
                     let alert = this.alertController.create({
