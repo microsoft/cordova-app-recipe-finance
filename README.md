@@ -1,6 +1,6 @@
-#TACO Finance Recipe
+# TACO Finance Recipe
 
-##Introduction 
+## Introduction 
 
 The TACO Finance App Recipe sample application built using Visual Studio Tools for Apache Cordova, the Ionic Framework and multiple Azure cloud services. The application delivers capabilities a typical **financial advisor** might need when away from the office. The purpose of this recipe is to highlight best practices for developing mobile applications using Visual Studio, Apache Cordova and Ionic 2, while illustrating mechanisms for implementing the following: 
 
