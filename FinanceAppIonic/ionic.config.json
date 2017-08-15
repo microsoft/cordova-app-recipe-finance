@@ -1,6 +1,8 @@
 {
   "name": "TACO Investments",
   "app_id": "com.microsoft.taco.financeappionic",
-  "v2": true,
-  "typescript": true
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }
